@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome</title>
+</head>
+
+<body>
+    <h1>welcome {{ first_name | upper }}</h1>
+    <p>this is the home page....</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, dolorem.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit {{ first_name }}</p>
+
+    <h1>my top movies</h1>
+    {% for movies in best_movies %}
+    <ul>
+        <li>{{ movies }}</li>
+    </ul>
+    {% endfor %}
+</body>
+
+</html>
