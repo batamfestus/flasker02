@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Welcome {{ current_user.username | upper }} {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+<div class="container">
+    <h1>DASHBOARD</h1>
+    <div class="card">
+        <div class="card-header"><strong>Name: </strong> {{ current_user.name | upper }}<br></div>
+        <div class="card-body">
+            <p class="card-text">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="card-title">MY DASHBOARD</h5>
+                        <strong>Username: </strong> {{ current_user.username }}<br>
+                        <strong>User Id: </strong> {{ current_user.id }}<br>
+                        <strong>Email: </strong> {{ current_user.email }}<br>
+                        <strong>Favorite Color: </strong> {{ current_user.favorite_color }}<br>
+                        <strong>About Author: </strong> {{ current_user.about_author }} <br>
+                        <strong>Profile picture: </strong> {{ current_user.profile_pic }} <br>
+                        <strong>Date Joined: </strong> {{ current_user.date_added }}<br><br>
+                        <button type="button" class="btn btn-dark me-2">
+                            <a href="{{ url_for('logout') }}" class="nav-link px-2 text-white">Logout</a>
+                        </button>
+                        <button type="button" class="btn btn-secondary me-2">
+                            <a href="{{ url_for('update', id=current_user.id) }}"
+                                class="nav-link px-2 text-white">Update
+                                Profile</a>
+                        </button>
+                        <button type="button" class="btn btn-danger me-2">
+                            <a href="{{ url_for('delete', id=current_user.id) }}"
+                                class="nav-link px-2 text-white">Delete
+                                Profile</a>
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        {% if current_user.profile_pic %}
+                        <img src="{{ url_for('static', filename='images/' + current_user.profile_pic) }}" align="right"
+                            alt="">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default.jpeg') }}" align="right" alt="">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            </p>
+        </div>
+    </div>
+</div><br><br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">UPDATE PROFILE</h1>
+        </div>
+        <div class="card-body">
+            <form action="/dashboard" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control", value=name_to_update.name) }}
+                <br>
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control", value=name_to_update.username) }}
+                <br>
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", value=name_to_update.email) }}
+                <br>
+                {{ form.favorite_color.label(class="form-label") }}
+                {{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
+                <br>
+                <textarea name="about_author" class="form-control"
+                    id="about_author">{{ name_to_update.about_author }}</textarea>
+                <br>
+                {{ form.profile_pic.label(class="form-label") }}
+                {{ form.profile_pic(class="form-control", value=name_to_update.profile_pic) }}
+                <br>
+                {{ form.submit(class="btn btn-dark") }}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

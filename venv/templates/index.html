@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>welcome</title>
-</head>
+{% block content %}
 
-<body>
+<br>
+<div class="container">
     <h1>welcome {{ first_name | upper }}</h1>
     <p>this is the home page....</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, dolorem.</p>
@@ -19,6 +15,6 @@
         <li>{{ movies }}</li>
     </ul>
     {% endfor %}
-</body>
+</div>
 
-</html>
+{% endblock %}

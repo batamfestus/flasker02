@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<br>
+<div class="container">
+
+    <h1>You searched for: <em>{{ searched }}</em></h1>
+    <br><br>
+    {% if posts %}
+
+    {% for post in posts %}
+    <h1>Post Title: {{ post.title }} </h1><br>
+    <h3>Author: {{ post.poster.name }}</h3> <br>
+    <small>{{ post.date_posted }}</small> <br>
+    <p>{{ post.content|safe }}</p> <br>
+    <a href="{{ url_for('post', id=post.id) }}" class="btn btn-dark">Read More</a>
+    {% if post.poster_id == current_user.id %}
+    <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-dark">Edit Post</a>
+    <a class="btn btn-danger" href="{{ url_for('delete_post', id=post.id) }}"
+        onclick="return confirm('Are you sure you want to delete post {{ post.id }}? This action is irreversible.');">Delete
+        Post</a>
+    <hr>
+    {% endif %}
+    {% endfor %}
+
+    {% else %}
+    <p>Sorry, your search: <strong>{{ searched }}</strong> was not found</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

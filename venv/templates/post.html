@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Welcome {{ name | upper }} {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <br>
+
+    <h1>Post Title: {{ post.title }} </h1><br>
+    <h3>By: {{ post.poster.name }}</h3> <br>
+    <small>{{ post.date_posted }}</small> <br>
+    <p>{{ post.content|safe }}</p>
+
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                {% if post.poster.profile_pic %}
+                <img src="{{ url_for('static', filename='images/' + post.poster.profile_pic) }}" alt="" width="150px"
+                    align="left">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/default.jpeg') }}" alt="" width="150px" align="left">
+                {% endif %}
+            </div>
+
+            <div class="col-md-10">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h5>{{ post.poster.name }}</h5>
+                        <p class="card-text">
+                            {% if post.poster.about_author %}
+                            {{ post.poster.about_author }}
+                            {% else %}
+                        <p>Author has no about profile yet....</p>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ url_for('posts') }}" class="btn btn-dark">View All Posts</a>
+    {% if post.poster_id == current_user.id or current_user.id == 1 or current_user == 2%}
+    <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-dark">Edit Post</a>
+    {% for post in posts %}
+    <a class="btn btn-danger" href="{{ url_for('delete_post', id=post.id) }}"
+        onclick="return confirm('Are you sure you want to delete post {{ post.id }}? This action is irreversible.');">
+        Delete Post
+    </a>
+    {% endfor %}
+    {% endif %}
+
+
+    <hr>
+
+</div>
+
+{% endblock %}
